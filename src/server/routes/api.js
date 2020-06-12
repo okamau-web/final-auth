@@ -7,21 +7,9 @@ const mongoose = require("mongoose");
 const passport = require('passport')
 const bcrypt = require('bcrypt')
 
-//**online mongodb**//
-//  const db =
-//   "mongodb+srv://hannah:hanna@eventsdb-kcpmt.mongodb.net/test?retryWrites=true&w=majority";
-//  mongoose.connect(db, err => {
-//     if (err) {
-//         console.error("Not Connected" + err);
-//     } else {
-//          console.log("Connected to mongoDB");
-//     }
-// } );
-
-//*local mongodb */
-
+const link = require('./p')
 mongoose
-  .connect("mongodb://localhost/newauth", {
+  .connect(link, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -32,21 +20,6 @@ mongoose
 router.get("/", function (req, res) {
   res.send("From API router");
 });
-
-// router.post("/register", (req, res,next) => {
-//   var user = new User(req.body);
-
-//   user
-//     .save()
-//     .then((registeredUser) => {
-//       var payload = { subject: registeredUser._id };
-//       var token = jwt.sign(payload, "secretKey");
-//       res.status(200).send({ token });
-//     })
-//     .catch((e) => {
-//       console.log("error occured", e);
-//     });
-// });
 
 router.post('/register', function (req, res, next) {
   addToDB(req, res);
@@ -123,24 +96,5 @@ router.get("/property", (req, res) => {
   });
 });
 
-// router.post("/login", (req, res) => {
-//   let userData = req.body;
-
-//   User.findOne({ username: userData.username }, (error, user) => {
-//     if (error) {
-//       //console.log(error);
-//     } else {
-//       if (!user) {
-//         res.status(401).send("Invalid username");
-//       } else if (user.password !== userData.password) {
-//         res.status(401).send("Invalid password");
-//       } else {
-//         var payload = { subject: user._id };
-//         var token = jwt.sign(payload, "secetKey");
-//         res.status(200).send({ user, token });
-//       }
-//     }
-//   });
-// });
 
 module.exports = router;
